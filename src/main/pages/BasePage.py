@@ -9,6 +9,8 @@ from src.main.utils.logger import logger
 
 
 class BasePage:
+    timeout = 30
+
     def __init__(self, driver):
         """
         Initialize BasePage with a WebDriver instance.
@@ -17,19 +19,20 @@ class BasePage:
             driver (WebDriver): WebDriver instance from Selenium.
         """
         self.driver = driver
-        self.wait = WebDriverWait(driver, 30)
+        self.wait = WebDriverWait(driver, self.timeout)
 
-    def wait_for_visibility_of_element(self, locator):
+    def wait_for_visibility_of_element(self, locator, custom_timeout=30):
         """
         Wait for an element to be visible on the page.
 
         Args:
             locator (tuple): A tuple representing the locator strategy and value (e.g., (By.ID, 'element_id')).
+            custom_timeout (int): The maximum time to wait for the element to be visible, in seconds. Default is 10 seconds.
 
         Returns:
             WebElement: The WebDriver element once it is visible.
         """
-        return self.wait.until(EC.visibility_of_element_located(locator))
+        return WebDriverWait(self.driver, custom_timeout).until(EC.visibility_of_element_located(locator))
 
     def wait_for_presence_of_element(self, locator):
         """

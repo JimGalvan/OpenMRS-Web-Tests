@@ -11,8 +11,3 @@ class PatientSummaryDashboardPage(BasePage):
         Args:
             driver (WebDriver): The WebDriver instance.
         """
-        super().__init__(driver)
-        self.toast_message_text = (By.XPATH, "//*[@role='status']")
-
-    def get_toast_message(self):
-        return self.get_text(self.toast_message_text)
