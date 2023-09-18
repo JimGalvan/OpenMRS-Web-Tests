@@ -1,0 +1,9 @@
+# Ignore pytest cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+*.pycachefile
+.pytest_cache/
