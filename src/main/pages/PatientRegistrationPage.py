@@ -151,4 +151,38 @@ class PatientRegistrationPage(BasePage):
         self.click(self.submit_button)
 
     def click_to_hide_calendar(self):
-       self.click_with_js(self.country_input)
+        self.click_with_js(self.country_input)
+
+    def fill_patient_info(self, first_name, middle_name, family_name, sex, dob, phone_number, state_province,
+                          county_district, country):
+        """
+        Fills the patient information in the application.
+
+        Parameters:
+        first_name (str): The first name of the patient.
+        middle_name (str): The middle name of the patient.
+        family_name (str): The family name or last name of the patient.
+        sex (str): The gender of the patient (e.g., 'Male', 'Female', 'Other').
+        dob (str): The date of birth of the patient in the format 'dd/mm/YYYY'.
+        phone_number (str): The phone number of the patient.
+        state_province (str): The state or province of the patient.
+        county_district (str): The county or district of the patient.
+        country (str): The country of the patient.
+
+        This method scrolls to the bottom of the page and sets the provided phone number,
+        state/province, county/district, and country. It then scrolls to the top of the page
+        and sets the first name, middle name, family name, gender, and date of birth.
+        """
+        self.scroll_to_bottom()
+        self.set_phone(phone_number)
+        self.set_state_province(state_province)
+        self.set_county_district(county_district)
+        self.set_country(country)
+
+        self.scroll_to_top()
+        self.set_first_name(first_name)
+        self.set_middle_name(middle_name)
+        self.set_family_name(family_name)
+        self.scroll_to_top()
+        self.select_sex(sex)
+        self.set_birthdate(dob)

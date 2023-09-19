@@ -2,8 +2,15 @@ import pytest
 from faker import Faker
 
 
+# Function to generate random patient data
 @pytest.fixture(scope="module")
 def patient_data():
+    """
+    Generates random patient data using Faker library.
+
+    Returns:
+        dict: Random patient data as a dictionary.
+    """
     fake = Faker()
     first_name = fake.first_name()
     middle_name = fake.first_name()  # Adding middle name

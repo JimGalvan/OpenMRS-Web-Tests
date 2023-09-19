@@ -16,3 +16,6 @@ class ToastNotification(BasePage):
     def get_toast_message(self, timeout=20):
         self.wait_for_visibility_of_element(self.toast_message_text, timeout)
         return self.get_text(self.toast_message_text)
+
+    def wait_for_toast_message_to_be_visible(self, timeout=20):
+        self.wait_for_visibility_of_element(self.toast_message_text, timeout)
