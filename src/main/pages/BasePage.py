@@ -1,6 +1,6 @@
 import time
 
-from selenium.common import NoSuchElementException
+from selenium.common import NoSuchElementException, ElementNotInteractableException, ElementClickInterceptedException
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -10,6 +10,8 @@ from src.main.utils.logger import logger
 
 class BasePage:
     timeout = 30
+    short_timeout = 6
+    max_attempts = 2
 
     def __init__(self, driver):
         """
@@ -70,16 +72,33 @@ class BasePage:
 
     def set_text(self, locator, text):
         """
-               Set text in an input field.
+        Set text in an input field.
 
-               Args:
-                   locator (tuple): A tuple representing the locator strategy and value (e.g., (By.ID, 'element_id')).
-                   text (str): The text to be entered into the input field.
-               """
+        Args:
+            locator (tuple): A tuple representing the locator strategy and value (e.g., (By.ID, 'element_id')).
+            text (str): The text to be entered into the input field.
+        """
 
-        element = self.wait_for_clickable(locator)
-        element.clear()
-        element.send_keys(text)
+        attempt = 1
+
+        while attempt <= self.max_attempts:
+
+            element = self.wait_for_clickable(locator)
+
+            try:
+                element.click()
+            except Exception as e:
+                logger.exception(e)
+
+            try:
+                element.clear()
+                element.send_keys(text)
+                break
+            except Exception as e:
+                logger.exception(e)
+                time.sleep(self.short_timeout)
+
+            attempt += 1
 
     def get_text(self, locator):
         """
@@ -180,9 +199,6 @@ class BasePage:
 
         This function scrolls down by a quarter of the page's height using JavaScript.
 
-        Args:
-            None
-
         Returns:
             None
         """
@@ -207,29 +223,12 @@ class BasePage:
         """
         Scroll to the bottom of a web page using Selenium.
 
-        Parameters:
-            driver (WebDriver): Selenium WebDriver instance.
-
         Returns:
             None
         """
         try:
-            # Navigate to the page
-            driver = self.driver
             # Scroll down to the bottom of the page
-            while True:
-
-                # Scroll down by sending keys to the body element
-                self.set_text((By.TAG_NAME, "body"), Keys.END)
-
-                time.sleep(2)
-
-                # Check if we have reached the bottom of the page
-                current_scroll_position = driver.execute_script("return window.pageYOffset;")
-                max_scroll_height = driver.execute_script("return document.body.scrollHeight;")
-
-                if current_scroll_position >= max_scroll_height:
-                    break
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
             logger.info("Scrolled to the bottom of the page.")
 

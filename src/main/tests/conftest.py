@@ -12,7 +12,7 @@ def test_user():
 # WebDriver setup
 @pytest.fixture(scope="module")
 def driver():
-    driver =  webdriver.Chrome()
+    driver = webdriver.Firefox()
     driver.maximize_window()
     return driver
 

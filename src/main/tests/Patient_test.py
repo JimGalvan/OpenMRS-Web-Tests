@@ -32,7 +32,7 @@ def test_add_patient(driver, patient_data, expected_messages, test_user):
 
     # Fill info from the bottom to the top to avoid input loading issues
 
-    patient_registration_page.fill_patient_info(
+    patient_registration_page.register_patient(
         patient_data['first_name'],
         patient_data['middle_name'],
         patient_data['family_name'],
@@ -43,8 +43,6 @@ def test_add_patient(driver, patient_data, expected_messages, test_user):
         patient_data['county_district'],
         patient_data['country']
     )
-
-    patient_registration_page.click_register_patient_button()
 
     assert expected_messages[
                "PATIENT_REGISTERED_SUCCESSFULLY_MSG_TITLE"] in toast_notification.get_toast_message(timeout=30)
@@ -73,7 +71,7 @@ def test_patient_search_and_view(driver, patient_data, expected_messages, test_u
 
     # Fill info from the bottom to the top to avoid input loading issues
 
-    patient_registration_page.fill_patient_info(
+    patient_registration_page.register_patient(
         patient_data['first_name'],
         patient_data['middle_name'],
         patient_data['family_name'],
@@ -85,7 +83,6 @@ def test_patient_search_and_view(driver, patient_data, expected_messages, test_u
         patient_data['country']
     )
 
-    patient_registration_page.click_register_patient_button()
     toast_notification.wait_for_toast_message_to_be_visible()
 
     home_page.open()

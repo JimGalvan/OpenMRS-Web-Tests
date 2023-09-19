@@ -1,7 +1,21 @@
+import time
+
 from selenium.webdriver import Keys, ActionChains
 from selenium.webdriver.common.by import By
 from src.main.pages.BasePage import BasePage
+from src.main.pages.ToastNotification import ToastNotification
 from src.main.utils.logger import logger
+
+
+def set_gender(value):
+    """
+    Sets the gender input.
+
+    Args:
+        value (str): The value to set for gender.
+    """
+    logger.info("Setting gender to: %s", value)
+    # Add your code to set the gender
 
 
 class PatientRegistrationPage(BasePage):
@@ -69,16 +83,6 @@ class PatientRegistrationPage(BasePage):
         """
         logger.info("Setting phone to: %s", value)
         self.set_text(self.phone_input, value)
-
-    def set_gender(self, value):
-        """
-        Sets the gender input.
-
-        Args:
-            value (str): The value to set for gender.
-        """
-        logger.info("Setting gender to: %s", value)
-        # Add your code to set the gender
 
     def set_birthdate(self, value):
         """
@@ -153,8 +157,8 @@ class PatientRegistrationPage(BasePage):
     def click_to_hide_calendar(self):
         self.click_with_js(self.country_input)
 
-    def fill_patient_info(self, first_name, middle_name, family_name, sex, dob, phone_number, state_province,
-                          county_district, country):
+    def register_patient(self, first_name, middle_name, family_name, sex, dob, phone_number, state_province,
+                         county_district, country):
         """
         Fills the patient information in the application.
 
@@ -173,6 +177,9 @@ class PatientRegistrationPage(BasePage):
         state/province, county/district, and country. It then scrolls to the top of the page
         and sets the first name, middle name, family name, gender, and date of birth.
         """
+
+        time.sleep(self.short_timeout)
+
         self.scroll_to_bottom()
         self.set_phone(phone_number)
         self.set_state_province(state_province)
@@ -186,3 +193,11 @@ class PatientRegistrationPage(BasePage):
         self.scroll_to_top()
         self.select_sex(sex)
         self.set_birthdate(dob)
+
+        self.click_register_patient_button()
+
+        toast_notification = ToastNotification(self.driver)
+
+        # In Firefox sometimes the dob app validation fails, so the user needs to click twice.
+        if "Incomplete form" in toast_notification.get_toast_message():
+            self.click_register_patient_button()
