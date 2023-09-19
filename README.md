@@ -1,4 +1,4 @@
-# Automation Framework with Python, Selenium, Pytest, and Page Object Model
+# Test Automation Framework with Python, Selenium, Pytest, and Page Object Model
 
 ## Overview
 This project is a showcase of my skills in Python, Selenium, Pytest, and Page Object Model (POM) by creating a robust automation framework. The provided `test_add_patient` and `test_patient_search_and_view` test cases demonstrate the seamless integration of these technologies to automate patient registration and patient search/view functionalities on a web application.
