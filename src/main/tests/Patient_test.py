@@ -14,6 +14,11 @@ from src.main.fixtures.expected_ui_text import expected_messages
 
 
 def test_add_patient(driver, patient_data, expected_messages, test_user):
+    """
+       Test case to verify the functionality of adding a new patient.
+       Author: Jim Galvan
+    """
+
     login_page = LoginPage(driver)
     home_page = HomePage(driver)
     patient_registration_page = PatientRegistrationPage(driver)
@@ -47,6 +52,11 @@ def test_add_patient(driver, patient_data, expected_messages, test_user):
 
 
 def test_patient_search_and_view(driver, patient_data, expected_messages, test_user):
+    """
+        Test case to verify the functionality of patient search and view.
+        Author: Jim Galvan
+    """
+
     login_page = LoginPage(driver)
     home_page = HomePage(driver)
     patient_registration_page = PatientRegistrationPage(driver)
