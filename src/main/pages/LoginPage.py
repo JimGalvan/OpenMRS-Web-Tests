@@ -1,4 +1,7 @@
+import logging
+
 from selenium.webdriver.common.by import By
+
 from src.main.pages.BasePage import BasePage
 from src.main.utils.logger import logger
 

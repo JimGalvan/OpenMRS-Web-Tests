@@ -9,7 +9,7 @@ from src.main.fixtures.patient_test_data import patient_data
 from src.main.pages.PatientSummaryDashboardPage import PatientSummaryDashboardPage
 from src.main.pages.SearchPage import SearchPage
 from src.main.pages.ToastNotification import ToastNotification
-from src.main.utils.logger import logger
+import src.main.utils.logger as logger
 from src.main.fixtures.expected_ui_text import expected_messages
 
 
