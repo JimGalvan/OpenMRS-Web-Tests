@@ -8,6 +8,8 @@ This project is a showcase of my skills in Python, Selenium, Pytest, and Page Ob
 - **Selenium**: Used for browser automation and interacting with web elements.
 - **Pytest**: Testing framework for structuring and organizing test cases effectively.
 - **Page Object Model (POM)**: Implemented for maintainable and scalable automation, enhancing code reusability and readability.
+- **pytest-html**: For readable test reports.
+
 
 This project not only demonstrates the automation of the patient registration process but also encapsulates a robust automation framework, showcasing efficient use of Python, Selenium, Pytest, and the Page Object Model.
 
