@@ -3,14 +3,15 @@ from selenium import webdriver
 from jproperties import Properties
 import src.main.utils.file_utils as file_utils
 from src.main.utils.logger import logger
-
+from os import path
+from selenium.webdriver.firefox.service import Service
 
 class InvalidBrowser(Exception):
     pass
 
 
 @pytest.fixture
-def test_user():
+def admin_user():
     """
     Fixture to provide test user information.
     """
@@ -32,12 +33,14 @@ def driver():
     browser = str(configs.get("browser").data).strip().lower()
 
     # Initialize WebDriver based on the browser specified
+    service = Service(log_path=path.devnull)
+
     if browser == "chrome":
-        driver = webdriver.Chrome()
+        driver = webdriver.Chrome(service=service)
     elif browser == "firefox":
-        driver = webdriver.Firefox()
+        driver = webdriver.Firefox(service=service)
     elif browser == "edge":
-        driver = webdriver.Edge()
+        driver = webdriver.Edge(service=service)
     else:
         logger.error(f"Invalid browser: {browser}")
         raise InvalidBrowser(f"Invalid browser: {browser}")

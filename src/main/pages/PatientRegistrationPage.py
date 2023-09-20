@@ -194,6 +194,8 @@ class PatientRegistrationPage(BasePage):
         self.select_sex(sex)
         self.set_birthdate(dob)
 
+        time.sleep(1)
+
         self.click_register_patient_button()
 
         toast_notification = ToastNotification(self.driver)
