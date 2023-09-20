@@ -1,7 +1,5 @@
 import pytest
 from selenium import webdriver
-from jproperties import Properties
-import src.main.utils.file_utils as file_utils
 from src.main.utils.PropertiesReader import PropertiesReader
 from src.main.utils.logger import logger
 from os import path
