@@ -8,3 +8,5 @@ __pycache__/
 *.pycachefile
 .pytest_cache/
 *.log
+.idea/
+/assets/

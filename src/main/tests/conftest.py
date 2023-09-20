@@ -4,6 +4,8 @@ from src.main.utils.PropertiesReader import get_config_properties
 from src.main.utils.logger import logger
 from os import path
 from selenium.webdriver.firefox.service import Service
+from datetime import datetime
+from pathlib import Path
 
 
 @pytest.fixture
@@ -14,7 +16,7 @@ def admin_user():
     return {"username": "admin", "password": "Admin123"}
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def driver():
     """
     Fixture to set up the WebDriver based on browser configuration.
@@ -29,6 +31,8 @@ def driver():
     # setup service to disable firefox log
     service = Service(log_path=path.devnull)
 
+    logger.info(f"Running web driver: {browser}")
+
     if browser == "chrome":
         driver = webdriver.Chrome()
     elif browser == "firefox":
@@ -40,14 +44,16 @@ def driver():
         driver = webdriver.Chrome()
 
     driver.maximize_window()
-    return driver
+    yield driver
 
 
 @pytest.fixture(autouse=True)
-def run_around_tests():
+def run_around_tests(driver):
     """
     Fixture to set up and tear down resources before and after each test.
     """
     # Set up resources or perform other tasks before the test is run
     yield
     # Tear down resources or perform other tasks after the test is run
+    logger.info("Closing web driver")
+    driver.quit()
