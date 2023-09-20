@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from src.main.pages.BasePage import BasePage
 from src.main.utils.logger import logger
+from src.main.utils.PropertiesReader import get_config_properties
 
 
 class HomePage(BasePage):
@@ -11,7 +12,10 @@ class HomePage(BasePage):
     def open(self):
         """Open the login page."""
         logger.info("Opening the home page")
-        self.driver.get("https://o3.openmrs.org/openmrs/spa/home")
+
+        base_url = get_config_properties().get_value("base_url")
+
+        self.driver.get(f"{base_url}/openmrs/spa/home")
 
     def click_add_patient_button(self):
         self.click(self.add_patient_button)

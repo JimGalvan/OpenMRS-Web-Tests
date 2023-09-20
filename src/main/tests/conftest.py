@@ -1,13 +1,9 @@
 import pytest
 from selenium import webdriver
-from src.main.utils.PropertiesReader import PropertiesReader
+from src.main.utils.PropertiesReader import get_config_properties
 from src.main.utils.logger import logger
 from os import path
 from selenium.webdriver.firefox.service import Service
-
-
-class InvalidBrowser(Exception):
-    pass
 
 
 @pytest.fixture
@@ -25,23 +21,23 @@ def driver():
     """
 
     # Load browser configuration from properties
-    properties_reader = PropertiesReader("\\src\\resources\\config.properties")
+    properties_reader = get_config_properties()
     properties_reader.get_value("browser")
 
     browser = properties_reader.get_value("browser")
 
-    # Initialize WebDriver based on the browser specified
+    # setup service to disable firefox log
     service = Service(log_path=path.devnull)
 
     if browser == "chrome":
-        driver = webdriver.Chrome(service=service)
+        driver = webdriver.Chrome()
     elif browser == "firefox":
         driver = webdriver.Firefox(service=service)
     elif browser == "edge":
-        driver = webdriver.Edge(service=service)
+        driver = webdriver.Edge()
     else:
-        logger.error(f"Invalid browser: {browser}")
-        raise InvalidBrowser(f"Invalid browser: {browser}")
+        logger.error(f"Invalid browser: {browser}. Using default browser chrome")
+        driver = webdriver.Chrome()
 
     driver.maximize_window()
     return driver

@@ -3,6 +3,10 @@ from src.main.utils.logger import logger
 from jproperties import Properties
 
 
+def get_config_properties():
+    return PropertiesReader("\\src\\resources\\config.properties")
+
+
 class PropertiesReader:
     ROOT_PROJECT_FOLDER_INDEX = 3
 
