@@ -2,9 +2,11 @@ import pytest
 from selenium import webdriver
 from jproperties import Properties
 import src.main.utils.file_utils as file_utils
+from src.main.utils.PropertiesReader import PropertiesReader
 from src.main.utils.logger import logger
 from os import path
 from selenium.webdriver.firefox.service import Service
+
 
 class InvalidBrowser(Exception):
     pass
@@ -23,14 +25,12 @@ def driver():
     """
     Fixture to set up the WebDriver based on browser configuration.
     """
+
     # Load browser configuration from properties
-    configs = Properties()
-    config_file_path = file_utils.get_config_path()
+    properties_reader = PropertiesReader("\\src\\resources\\config.properties")
+    properties_reader.get_value("browser")
 
-    with open(config_file_path, 'rb') as read_prop:
-        configs.load(read_prop)
-
-    browser = str(configs.get("browser").data).strip().lower()
+    browser = properties_reader.get_value("browser")
 
     # Initialize WebDriver based on the browser specified
     service = Service(log_path=path.devnull)
