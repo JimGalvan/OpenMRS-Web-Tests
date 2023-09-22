@@ -17,6 +17,9 @@ This project not only demonstrates the automation of the patient registration pr
 
 OpenMRS is an open-source electronic medical record (EMR) platform, designed for efficient patient data management and healthcare delivery, especially in resource-constrained environments. Its modular architecture and global community support enable customization, interoperability, and adaptation to various healthcare settings.
 
+## Instructions
+To run all the test cases and generate a report, execute in the terminal the command:  `python -m pytest --html=report.html`
+
 ## Test Case 1 Description
 The `test_add_patient` test case simulates the process of adding a patient to the application, following a structured approach using the Page Object Model to interact with web elements efficiently and apply the required actions.
 
